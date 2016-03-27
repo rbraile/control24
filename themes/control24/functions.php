@@ -353,3 +353,14 @@ require get_template_directory() . '/inc/template-tags.php';
  * @since Twenty Fifteen 1.0
  */
 require get_template_directory() . '/inc/customizer.php';
+
+function estilos_theme() {
+  wp_register_style( 'estilos',
+    get_template_directory_uri() . '/css/custom.css',
+    array(),
+    '1.1',
+    'all' );
+
+  wp_enqueue_style( 'estilos' );
+}
+add_action('wp_print_styles', 'estilos_theme');
