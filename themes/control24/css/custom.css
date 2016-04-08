@@ -1,3 +1,383 @@
-/*
-estilos custom
+/**
+*  estilos custom
 */
+
+html { font-size: 62.5%; } 
+
+body {
+    font-size: 1.6rem;
+    font-weight:  normal;
+    background: #ccc;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* -------------------- Page ------------------------ */
+
+.separador-rojo {
+    border-top: 4px solid #df2a0d;
+    position: relative;
+    padding-top: 20px;
+}
+
+.separador-rojo::after {
+    content: url("../images/arrow-red.jpg");
+    left: 46px;
+    position: absolute;
+    top: -4px;
+}
+
+header h1 {
+    color: #dd2c0f;
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.content-area, .content-sidebar {
+    padding-top: 0;
+}
+
+.site-main .main-content .site-content {
+    width: 600px;
+    float: left;
+}
+
+.site-main .main-content .site-content .entry-content,
+.site-main .main-content .site-content .entry-header {
+    padding: 0 20px;
+    width: 600px;
+    max-width: inherit;
+    box-sizing: border-box;
+    float: left;
+}
+
+.site-main .main-content .site-content .entry-content p {
+    padding-bottom: 10px;
+}
+
+.site-main .main-content .content-area aside {
+    float: right;
+    width: 300px;
+}
+
+
+
+/* -------------------- CLEAR ------------------------ */
+
+#menu-servicios-destacados::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+p {
+    margin: 0;
+    line-height: normal;
+}
+
+#page {
+    width: 928px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.site-content, .site-main .widecolumn {
+    margin: 0;
+}
+
+/*------ HEADER ------*/
+
+.site-header {
+    background: none;
+}
+
+.controlh {
+    background: #ccc;
+}
+
+.header-logo {
+    background: url("../images/logo.png") 0 0 no-repeat;
+    display: block;
+    width: 293px;
+    height: 52px;
+    float: left;
+}
+
+/*------------- Menu principal -------------*/
+
+::selection {
+    background-color: transparent;
+    color: #dd2c0f;
+    text-shadow: none;
+}
+
+::-moz-selection {
+    background-color: transparent;
+    color: #dd2c0f;
+    text-shadow: none;
+}
+
+.primary-navigation li:hover > a, .primary-navigation li.focus > a {
+    background-color: transparent;
+    color: #dd2c0f;
+}
+
+.site-navigation .current_page_item > a,
+.site-navigation .current_page_ancestor > a, 
+.site-navigation .current-menu-item > a, 
+.site-navigation .current-menu-ancestor > a {
+    color: #dd2c0f;
+    font-size: 1.6rem;
+    font-weight:  normal;
+}
+
+.site-navigation a {
+    text-transform: none;
+}
+
+.primary-navigation a {
+    color: #475055;
+    font-size: 1.6rem;
+
+}
+
+.arrow {
+    position: relative;
+    background: #fff;
+    border: 2px solid #dd2c0f;
+}
+.arrow:after, .arrow:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.arrow:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: #fff;
+    border-width: 20px 20px 20px 20px;
+    margin-left: -20px;
+}
+.arrow:before {
+    border-color: rgba(221, 44, 15, 0);
+    border-top-color: #dd2c0f;
+    border-width: 23px 23px 23px 23px;
+    margin-left: -23px;
+}
+
+
+/*------------- Menu redes -------------*/
+
+.menu-redes {
+    list-style: none;
+    float: right;
+}
+
+.menu-redes li {
+    display: inline-block;
+    background: url("../images/ic-redes.png") 0 0 no-repeat;
+    width: 28px;
+    height: 32px;
+}
+
+.menu-redes li a {
+    display: block;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden; 
+}
+
+.menu-redes li.linkedin {
+}
+
+.menu-redes li.contacto {
+    background-position: 0 -32px; 
+}
+
+.menu-redes li.facebook {
+    background-position: 0 -64px; 
+}
+
+
+/*------------- HOME -------------*/
+
+.home .site-main .main-content .site-content .entry-content {
+
+}
+
+.home .site-content {
+    float: left;
+    width: 600px;
+}
+
+.home .content-area {
+    padding-top: 20px;
+}
+
+.home aside {
+    float: right;
+    width: 300px;
+}
+
+.home article.content-home p {
+    color: #282828;
+}
+
+#nav_menu-5 {
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+#nav_menu-5 .widgettitle {
+    color: #fff;
+    position: absolute;
+    left: 10px;
+}
+
+.menu-servicios-destacados-container ul {
+    background: url('../images/bg-servicios-desta.jpg') no-repeat;
+    padding-top: 58px;
+    height: 266px; 
+}
+
+.menu-servicios-destacados-container ul li {
+    width: 150px;
+    float: left;
+    border-top: none;
+    /*border-left: 1px solid #b3b2b2;*/
+}
+
+.menu-servicios-destacados-container ul li img {
+    display: block;
+    width: 85px;
+    margin: 0 auto;
+}
+
+.menu-servicios-destacados-container ul li a {
+    width: 100%;
+}
+
+.menu-servicios-destacados-container ul li a:hover {
+    color: #fff;
+}
+
+.menu-servicios-destacados-container ul li a span {
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+}
+
+iframe {
+    margin: 0;
+}
+
+
+/*------------- DEMO -----------------*/
+
+.wpcf7-form-control-wrap {
+    float: right;
+    margin-bottom: 10px;
+    width: 47%;
+}
+
+.wpcf7-form-control-wrap:nth-child(odd) {
+    float: left;
+}
+
+.wpcf7-form-control-wrap.como {
+    float: none;
+}
+
+.wpcf7-form-control-wrap.telefono input {
+    width: 100%;
+}
+
+.btn-red,
+input[type="submit"].solicitud-demo {
+    background-color: #df2a0d;
+    border-radius: 4px;
+    margin-top: 10px;
+    color: #fff;
+}
+
+#wpcf7-f28-p25-o1 {
+    background: #999;
+    padding: 15px;
+}
+
+.textarea-como {
+    height: 100px;
+}
+
+/*------------- INSTALADORES -------------*/
+
+.subtitulo {
+    background: #c3c3c3;
+    padding: 20px;
+}
+
+.subtitulo .texto {
+    float: left;
+    width: 380px;
+}
+
+.subtitulo .btn-red {
+    padding: 10px;
+    display: inline-block;
+    /*width: 200px*/
+    text-align: center;
+    text-decoration: none;
+}
+
+.subtitulo .btn-red strong {
+    display: block;
+}
+
+/*------------- FOOTER -------------*/
+
+#colophon {
+    background: #fff;
+    border-top: 4px solid #000;
+    padding-top: 26px;
+    color: #000;
+    margin: 0 auto 60px;
+    font-size: 10px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.f-left {
+    float: left;
+    width: 20%;
+    padding-top: 26px;
+    text-align: center;
+}
+
+.f-center {
+    float: left;
+    width: 60%;
+    text-align: center;
+}
+
+.f-right {
+    float: right;
+    width: 20%;
+    padding-top: 30px;
+    text-align: center;
+}
+
+
+

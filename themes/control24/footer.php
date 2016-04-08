@@ -2,33 +2,35 @@
 /**
  * The template for displaying the footer
  *
- * Contains the closing of the "site-content" div and all content after.
+ * Contains footer content and the closing of the #main and #page div elements.
  *
  * @package WordPress
- * @subpackage Twenty_Fifteen
- * @since Twenty Fifteen 1.0
+ * @subpackage Twenty_Fourteen
+ * @since Twenty Fourteen 1.0
  */
 ?>
 
-	</div><!-- .site-content -->
+		</div><!-- #main -->
 
-	<footer id="colophon" class="site-footer" role="contentinfo">
-		<div class="site-info">
-			<?php
-				/**
-				 * Fires before the Twenty Fifteen footer text for footer customization.
-				 *
-				 * @since Twenty Fifteen 1.0
-				 */
-				do_action( 'twentyfifteen_credits' );
-			?>
-			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'twentyfifteen' ) ); ?>"><?php printf( __( 'Proudly powered by %s', 'twentyfifteen' ), 'WordPress' ); ?></a>
-		</div><!-- .site-info -->
-	</footer><!-- .site-footer -->
+		<footer id="colophon" class="site-footer" role="contentinfo">
+            <div class="f-left">
+                <img src="<?php echo get_bloginfo('template_url'); ?>/images/data-fiscal.jpg" />
+            </div>
+            <div class="f-center">
+                <img src="<?php echo get_bloginfo('template_url'); ?>/images/logo-footer.jpg" />
+                <p>(342) 455 6565</p>
+                <p>Hipolito Irigoyen 3554, Santa Fe</p>
+                <p>Argentina</p>
+            </div>
+            <div class="f-right">
+                <img src="<?php echo get_bloginfo('template_url'); ?>/images/logo-casel.jpg" />
+                <p>SOCIO ACTIVO DE</p>
+                <p>LA CAMARA ARGENTINA</p>
+                <p>DE SEGURIDAD ELECTRONICA</p>
+            </div>
+		</footer><!-- #colophon -->
+	</div><!-- #page -->
 
-</div><!-- .site -->
-
-<?php wp_footer(); ?>
-
+	<?php wp_footer(); ?>
 </body>
 </html>

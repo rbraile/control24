@@ -1,178 +1,183 @@
-/* global screenReaderText */
 /**
- * Theme functions file.
+ * Theme functions file
  *
- * Contains handlers for navigation and widget area.
+ * Contains handlers for navigation, accessibility, header sizing
+ * footer widgets and Featured Content slider
+ *
  */
-
 ( function( $ ) {
-	var $body, $window, $sidebar, adminbarOffset, top = false,
-	    bottom = false, windowWidth, windowHeight, lastWindowPos = 0,
-	    topOffset = 0, bodyHeight, sidebarHeight, resizeTimer,
-	    secondary, button;
+	var body    = $( 'body' ),
+		_window = $( window ),
+		nav, button, menu;
 
-	function initMainNavigation( container ) {
-		// Add dropdown toggle that display child menu items.
-		container.find( '.menu-item-has-children > a' ).after( '<button class="dropdown-toggle" aria-expanded="false">' + screenReaderText.expand + '</button>' );
-
-		// Toggle buttons and submenu items with active children menu items.
-		container.find( '.current-menu-ancestor > button' ).addClass( 'toggle-on' );
-		container.find( '.current-menu-ancestor > .sub-menu' ).addClass( 'toggled-on' );
-
-		container.find( '.dropdown-toggle' ).click( function( e ) {
-			var _this = $( this );
-			e.preventDefault();
-			_this.toggleClass( 'toggle-on' );
-			_this.next( '.children, .sub-menu' ).toggleClass( 'toggled-on' );
-			_this.attr( 'aria-expanded', _this.attr( 'aria-expanded' ) === 'false' ? 'true' : 'false' );
-			_this.html( _this.html() === screenReaderText.expand ? screenReaderText.collapse : screenReaderText.expand );
-		} );
-	}
-	initMainNavigation( $( '.main-navigation' ) );
-
-	// Re-initialize the main navigation when it is updated, persisting any existing submenu expanded states.
-	$( document ).on( 'customize-preview-menu-refreshed', function( e, params ) {
-		if ( 'primary' === params.wpNavMenuArgs.theme_location ) {
-			initMainNavigation( params.newContainer );
-
-			// Re-sync expanded states from oldContainer.
-			params.oldContainer.find( '.dropdown-toggle.toggle-on' ).each(function() {
-				var containerId = $( this ).parent().prop( 'id' );
-				$( params.newContainer ).find( '#' + containerId + ' > .dropdown-toggle' ).triggerHandler( 'click' );
-			});
-		}
-	});
-
-	secondary = $( '#secondary' );
-	button = $( '.site-branding' ).find( '.secondary-toggle' );
+	nav = $( '#primary-navigation' );
+	button = nav.find( '.menu-toggle' );
+	menu = nav.find( '.nav-menu' );
 
 	// Enable menu toggle for small screens.
 	( function() {
-		var menu, widgets, social;
-		if ( ! secondary || ! button ) {
+		if ( ! nav || ! button ) {
 			return;
 		}
 
-		// Hide button if there are no widgets and the menus are missing or empty.
-		menu    = secondary.find( '.nav-menu' );
-		widgets = secondary.find( '#widget-area' );
-		social  = secondary.find( '#social-navigation' );
-		if ( ! widgets.length && ! social.length && ( ! menu || ! menu.children().length ) ) {
+		// Hide button if menu is missing or empty.
+		if ( ! menu || ! menu.children().length ) {
 			button.hide();
 			return;
 		}
 
-		button.on( 'click.twentyfifteen', function() {
-			secondary.toggleClass( 'toggled-on' );
-			secondary.trigger( 'resize' );
-			$( this ).toggleClass( 'toggled-on' );
-			if ( $( this, secondary ).hasClass( 'toggled-on' ) ) {
+		button.on( 'click.twentyfourteen', function() {
+			nav.toggleClass( 'toggled-on' );
+			if ( nav.hasClass( 'toggled-on' ) ) {
 				$( this ).attr( 'aria-expanded', 'true' );
-				secondary.attr( 'aria-expanded', 'true' );
+				menu.attr( 'aria-expanded', 'true' );
 			} else {
 				$( this ).attr( 'aria-expanded', 'false' );
-				secondary.attr( 'aria-expanded', 'false' );
+				menu.attr( 'aria-expanded', 'false' );
 			}
 		} );
 	} )();
+
+	/*
+	 * Makes "skip to content" link work correctly in IE9 and Chrome for better
+	 * accessibility.
+	 *
+	 * @link http://www.nczonline.net/blog/2013/01/15/fixing-skip-to-content-links/
+	 */
+	_window.on( 'hashchange.twentyfourteen', function() {
+		var hash = location.hash.substring( 1 ), element;
+
+		if ( ! hash ) {
+			return;
+		}
+
+		element = document.getElementById( hash );
+
+		if ( element ) {
+			if ( ! /^(?:a|select|input|button|textarea)$/i.test( element.tagName ) ) {
+				element.tabIndex = -1;
+			}
+
+			element.focus();
+
+			// Repositions the window on jump-to-anchor to account for header height.
+			window.scrollBy( 0, -80 );
+		}
+	} );
+
+	$( function() {
+		// Search toggle.
+		$( '.search-toggle' ).on( 'click.twentyfourteen', function( event ) {
+			var that    = $( this ),
+				wrapper = $( '#search-container' ),
+				container = that.find( 'a' );
+
+			that.toggleClass( 'active' );
+			wrapper.toggleClass( 'hide' );
+
+			if ( that.hasClass( 'active' ) ) {
+				container.attr( 'aria-expanded', 'true' );
+			} else {
+				container.attr( 'aria-expanded', 'false' );
+			}
+
+			if ( that.is( '.active' ) || $( '.search-toggle .screen-reader-text' )[0] === event.target ) {
+				wrapper.find( '.search-field' ).focus();
+			}
+		} );
+
+		/*
+		 * Fixed header for large screen.
+		 * If the header becomes more than 48px tall, unfix the header.
+		 *
+		 * The callback on the scroll event is only added if there is a header
+		 * image and we are not on mobile.
+		 */
+		if ( _window.width() > 781 ) {
+			var mastheadHeight = $( '#masthead' ).height(),
+				toolbarOffset, mastheadOffset;
+
+			if ( mastheadHeight > 48 ) {
+				body.removeClass( 'masthead-fixed' );
+			}
+
+			if ( body.is( '.header-image' ) ) {
+				toolbarOffset  = body.is( '.admin-bar' ) ? $( '#wpadminbar' ).height() : 0;
+				mastheadOffset = $( '#masthead' ).offset().top - toolbarOffset;
+
+				_window.on( 'scroll.twentyfourteen', function() {
+					if ( _window.scrollTop() > mastheadOffset && mastheadHeight < 49 ) {
+						body.addClass( 'masthead-fixed' );
+					} else {
+						body.removeClass( 'masthead-fixed' );
+					}
+				} );
+			}
+		}
+
+		// Focus styles for menus.
+		$( '.primary-navigation, .secondary-navigation' ).find( 'a' ).on( 'focus.twentyfourteen blur.twentyfourteen', function() {
+			$( this ).parents().toggleClass( 'focus' );
+		} );
+	} );
 
 	/**
 	 * @summary Add or remove ARIA attributes.
 	 * Uses jQuery's width() function to determine the size of the window and add
 	 * the default ARIA attributes for the menu toggle if it's visible.
-	 * @since Twenty Fifteen 1.1
+	 * @since Twenty Fourteen 1.4
 	 */
 	function onResizeARIA() {
-		if ( 955 > $window.width() ) {
+		if ( 781 > _window.width() ) {
 			button.attr( 'aria-expanded', 'false' );
-			secondary.attr( 'aria-expanded', 'false' );
-			button.attr( 'aria-controls', 'secondary' );
+			menu.attr( 'aria-expanded', 'false' );
+			button.attr( 'aria-controls', 'primary-menu' );
 		} else {
 			button.removeAttr( 'aria-expanded' );
-			secondary.removeAttr( 'aria-expanded' );
+			menu.removeAttr( 'aria-expanded' );
 			button.removeAttr( 'aria-controls' );
 		}
 	}
 
-	// Sidebar scrolling.
-	function resize() {
-		windowWidth = $window.width();
+	_window
+		.on( 'load.twentyfourteen', onResizeARIA )
+		.on( 'resize.twentyfourteen', function() {
+			onResizeARIA();
+	} );
 
-		if ( 955 > windowWidth ) {
-			top = bottom = false;
-			$sidebar.removeAttr( 'style' );
-		}
-	}
-
-	function scroll() {
-		var windowPos = $window.scrollTop();
-
-		if ( 955 > windowWidth ) {
-			return;
-		}
-
-		sidebarHeight = $sidebar.height();
-		windowHeight  = $window.height();
-		bodyHeight    = $body.height();
-
-		if ( sidebarHeight + adminbarOffset > windowHeight ) {
-			if ( windowPos > lastWindowPos ) {
-				if ( top ) {
-					top = false;
-					topOffset = ( $sidebar.offset().top > 0 ) ? $sidebar.offset().top - adminbarOffset : 0;
-					$sidebar.attr( 'style', 'top: ' + topOffset + 'px;' );
-				} else if ( ! bottom && windowPos + windowHeight > sidebarHeight + $sidebar.offset().top && sidebarHeight + adminbarOffset < bodyHeight ) {
-					bottom = true;
-					$sidebar.attr( 'style', 'position: fixed; bottom: 0;' );
-				}
-			} else if ( windowPos < lastWindowPos ) {
-				if ( bottom ) {
-					bottom = false;
-					topOffset = ( $sidebar.offset().top > 0 ) ? $sidebar.offset().top - adminbarOffset : 0;
-					$sidebar.attr( 'style', 'top: ' + topOffset + 'px;' );
-				} else if ( ! top && windowPos + adminbarOffset < $sidebar.offset().top ) {
-					top = true;
-					$sidebar.attr( 'style', 'position: fixed;' );
-				}
-			} else {
-				top = bottom = false;
-				topOffset = ( $sidebar.offset().top > 0 ) ? $sidebar.offset().top - adminbarOffset : 0;
-				$sidebar.attr( 'style', 'top: ' + topOffset + 'px;' );
-			}
-		} else if ( ! top ) {
-			top = true;
-			$sidebar.attr( 'style', 'position: fixed;' );
-		}
-
-		lastWindowPos = windowPos;
-	}
-
-	function resizeAndScroll() {
-		resize();
-		scroll();
-	}
-
-	$( document ).ready( function() {
-		$body          = $( document.body );
-		$window        = $( window );
-		$sidebar       = $( '#sidebar' ).first();
-		adminbarOffset = $body.is( '.admin-bar' ) ? $( '#wpadminbar' ).height() : 0;
-
-		$window
-			.on( 'scroll.twentyfifteen', scroll )
-			.on( 'load.twentyfifteen', onResizeARIA )
-			.on( 'resize.twentyfifteen', function() {
-				clearTimeout( resizeTimer );
-				resizeTimer = setTimeout( resizeAndScroll, 500 );
-				onResizeARIA();
+	_window.load( function() {
+		// Arrange footer widgets vertically.
+		if ( $.isFunction( $.fn.masonry ) ) {
+			$( '#footer-sidebar' ).masonry( {
+				itemSelector: '.widget',
+				columnWidth: function( containerWidth ) {
+					return containerWidth / 4;
+				},
+				gutterWidth: 0,
+				isResizable: true,
+				isRTL: $( 'body' ).is( '.rtl' )
 			} );
-		$sidebar.on( 'click.twentyfifteen keydown.twentyfifteen', 'button', resizeAndScroll );
+		}
 
-		resizeAndScroll();
-
-		for ( var i = 1; i < 6; i++ ) {
-			setTimeout( resizeAndScroll, 100 * i );
+		// Initialize Featured Content slider.
+		if ( body.is( '.slider' ) ) {
+			$( '.featured-content' ).featuredslider( {
+				selector: '.featured-content-inner > article',
+				controlsContainer: '.featured-content'
+			} );
 		}
 	} );
+
+    $(function(){
+        var items = $('#menu-servicios-destacados li');
+        $.each( items, function( key, value ) {
+            var self = $(this).children('a');
+            var title = self.attr('title');
+            if(title !== undefined) {
+                $(self).append('<span class="subtitle">' + title + '</span>');
+            }
+        }); 
+    });
+
 
 } )( jQuery );
