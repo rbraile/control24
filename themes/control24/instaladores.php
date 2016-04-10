@@ -22,8 +22,38 @@ get_header(); ?>
         get_template_part( 'featured-content' );
     }
 ?>
-    <div id="primary" class="content-area">
+    <div id="primary" class="content-area instaladores">
         <div id="content" class="site-content separador-rojo" role="main">
+
+            <?php $the_query = new WP_Query( 'category_name=noticias' ); ?>
+            <div id="slider-news">
+                <div class="slider-content">
+                <?php while ($the_query -> have_posts()) : $the_query -> the_post(); ?>
+                    <article class="content-news slider">
+                        <?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentythirteen' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
+                        <div class="contenido destacada clear">
+                            <?php if ( has_post_thumbnail() && ! post_password_required() && ! is_attachment() ) : ?>
+                            <div class="entry-thumbnail">
+                                <?php the_post_thumbnail(); ?>
+                            </div>
+                            <?php endif; ?>
+                            <div class="news">
+                                <p><?php the_time('l, F j, Y'); ?></p>
+                                <h2 clacontent-subcatss="entry-title">
+                                    <a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
+                                </h2>
+                                <div class="resumen">
+                                    <p><?php echo the_excerpt (); ?></p>
+                                </div>
+                            </div>
+                            <span class="box-color"></span>
+                        </div>
+                    </article><!-- #post -->
+                <?php endwhile; ?>
+                </div>
+                <div class="nav-slider"><a class="prevn"><</a> <a class="nextn">></a></div>
+            </div>
+            <?php wp_reset_query(); ?>
 
             <?php
                 // Start the Loop.

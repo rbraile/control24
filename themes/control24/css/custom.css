@@ -346,6 +346,73 @@ input[type="submit"].solicitud-demo {
     display: block;
 }
 
+/*---------- SLIDER -----------*/
+
+#slider-news,
+#video-slider {
+    height: 375px;
+    overflow: hidden;
+    position: relative;
+    padding-left: 20px
+}
+
+#slider-news {
+    height: 300px;
+}
+
+#slider-news .slider-content,
+#video-slider .sliderVideo-content {
+    width: 10000px;
+    position: absolute;
+}
+
+#slider-news .slider,
+#video-slider .slider {
+    display: inline-block;
+    width: 523px;
+    margin-right: 14px; 
+}
+
+#slider-news .nav-slider,
+#video-slider .nav-video {
+    position: relative;
+    top: 0;
+}
+
+#slider-news .nav-slider .nextn,
+#video-slider .nav-video .next,
+#slider-news .nav-slider .prevn,
+#video-slider .nav-video .prev {
+    height: 100%;
+    width: 20px;
+    position: absolute;
+    right: -8px;
+    top: 165px;
+    z-index: 101;
+}
+
+#slider-news .nav-slider .prevn,
+#video-slider .nav-video .prev {
+    left: -16px;
+    right: inherit;
+}
+
+.instaladores .entry-thumbnail {
+    float: left;
+    margin-right: 20px; 
+}
+
+.instaladores .news {
+    width: 260px;
+    float: left;
+}
+
+.instaladores .content-news {
+    margin-bottom: 20px;
+}
+
+
+
 /*------------- FOOTER -------------*/
 
 #colophon {

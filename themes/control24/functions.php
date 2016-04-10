@@ -268,6 +268,16 @@ function twentyfourteen_scripts() {
         ) );
     }
 
+    // if(is_page('instaladores')) {
+    //     wp_enqueue_script('slider-instaladores', plugin_dir_url('/') . 'ml-slider/assets/sliders/nivoslider/jquery.nivo.slider.pack.js',array('jquery'));
+    //     wp_enqueue_style( 'mslidercss', plugin_dir_url('/') . 'ml-slider/assets/sliders/nivoslider/nivo-slider.css', array( 'twentyfourteen-style' ), '20160405' );
+    //     wp_enqueue_style( 'msliderPublicCss', plugin_dir_url('/') . 'ml-slider/assets/metaslider/public.css', array( 'twentyfourteen-style' ), '20160405' );
+    //     wp_enqueue_style( 'msliderDefaultCss', plugin_dir_url('/') . 'ml-slider/assets/sliders/nivoslider/themes/default/default.css', array( 'twentyfourteen-style' ), '20160405' );
+    //     wp_style_add_data( 'mslidercss-ie', 'conditional', 'metaslider' );
+    //     wp_style_add_data( 'msliderPublicCss-ie', 'conditional', 'metaslider' );
+    //     wp_style_add_data( 'msliderDefaultCss-ie', 'conditional', 'metaslider' );
+    // } 
+
     wp_enqueue_script( 'twentyfourteen-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '20150315', true );
 }
 add_action( 'wp_enqueue_scripts', 'twentyfourteen_scripts' );
@@ -538,3 +548,16 @@ function estilos_theme() {
   wp_enqueue_style( 'estilos' );
 }
 add_action('wp_print_styles', 'estilos_theme');
+
+// custom excerpt length
+function control24_custom_excerpt_length( $length ) {
+   return 20;
+}
+add_filter( 'excerpt_length', 'control24_custom_excerpt_length', 999 );
+
+// add more link to excerpt
+function control24_custom_excerpt_more($more) {
+   global $post;
+   return '';
+}
+add_filter('excerpt_more', 'control24_custom_excerpt_more');
