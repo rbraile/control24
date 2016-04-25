@@ -202,6 +202,16 @@ function twentyfourteen_widgets_init() {
         'after_widget'  => '</div>',
     ) );
 
+    register_sidebar( array(
+        'name'          => __( 'menu de servicios', 'twentythirteen' ),
+        'id'            => 'servicios',
+        'description'   => __( 'aparecera en el sidebar de los servicios.', 'twentythirteen' ),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3>',
+        'after_title'   => '</h3>',
+    ) );
+
 }
 add_action( 'widgets_init', 'twentyfourteen_widgets_init' );
 

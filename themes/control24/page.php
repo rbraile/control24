@@ -41,7 +41,7 @@ get_header(); ?>
 		</div><!-- #content -->
         <aside>
             <?php echo do_shortcode( '[contentblock id=youtube-home]' );?>
-            <a href="#">
+            <a href="/instaladores">
                 <img src="<?php echo get_bloginfo('template_url'); ?>/images/instaladores-big.jpg" />
             </a>
         </aside> 

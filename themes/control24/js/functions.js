@@ -183,32 +183,32 @@
         if($('#video-slider').length > 0) {
             var slider = $('.sliderVideo-content'),
             slices = slider.children('.slider').length,
-            sliceWidth = 543,
+            sliceWidth = 487,
             marginSlide = 20,
+            current = 1,
             maxWidth = ((slices-1) * sliceWidth) - ((slices-1) * marginSlide);
 
 
             $('.next').click(function(){
-                console.log(parseInt(slider.css('left')));
-                console.log(maxWidth);
-                if(parseInt(slider.css('left')) <= - maxWidth) {
-                    return;
-                }
-
-                $('.sliderVideo-content').animate({
-                    left: '-=' + sliceWidth + 'px'
-                });
-            });
-            $('.prev').click(function(){
-
-                if(parseInt(slider.css('left')) == marginSlide) {
-                    return;
-                }
-
-                $('.sliderVideo-content').animate({
-                    left: '+=' + sliceWidth + 'px'
-                });
-            });
+               if(current >= slices) {
+                   current = slices;
+                   return;
+               }
+               current++;
+               $('.sliderVideo-content').animate({
+                   left: '-=' + sliceWidth + 'px'
+               });
+           });
+           $('.prev').click(function(){
+               if(current <= 1) {
+                   current = 1;
+                   return;
+               }
+               current--;
+               $('.sliderVideo-content').animate({
+                   left: '+=' + sliceWidth + 'px'
+               });
+           });
         }
     });
 
@@ -216,28 +216,31 @@ $(function(){
     if($('#slider-news').length > 0) {
         var slider = $('.slider-content'),
         slices = slider.children('.slider').length,
-        sliceWidth = 543,
+        sliceWidth = 582,
         marginSlide = 20,
+        current = 1,
         maxWidth = ((slices-1) * sliceWidth) - ((slices-1) * marginSlide);
 
-
         $('.nextn').click(function(){
-            console.log(parseInt(slider.css('left')));
-            console.log(maxWidth);
-            if(parseInt(slider.css('left')) <= - maxWidth) {
+            console.log(current);
+            
+            if(current >= slices) {
+                current = slices;
                 return;
             }
 
+            current++;
             $('.slider-content').animate({
                 left: '-=' + sliceWidth + 'px'
             });
         });
         $('.prevn').click(function(){
 
-            if(parseInt(slider.css('left')) == marginSlide) {
+            if(current <= 1) {
+                current = 1;
                 return;
             }
-
+            current--;
             $('.slider-content').animate({
                 left: '+=' + sliceWidth + 'px'
             });
