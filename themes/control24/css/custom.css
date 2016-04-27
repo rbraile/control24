@@ -662,6 +662,7 @@ input[type="submit"].solicitud-demo {
 #menu-servicios li {
     padding: 0;
     border-bottom: 1px solid #e1e5e7;
+    list-style: none;
 }
 
 #menu-servicios li a {

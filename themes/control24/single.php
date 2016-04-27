@@ -30,9 +30,22 @@ get_header(); ?>
         <aside>
          
           <?php if ( is_active_sidebar( 'servicios' ) ) : ?>
-              <div class="menu-servicios-content clearfix">
-                  <?php dynamic_sidebar( 'servicios' ); ?>
-              </div><!-- #tertiary -->
+                <div class="menu-servicios-content clearfix">
+                    <ul id="menu-servicios" class="nav-menu">
+                    <?php $the_query = new WP_Query( 'category_name=servicios' ); ?>
+                    <?php while ($the_query -> have_posts()) : $the_query -> the_post(); ?>
+                        <?php $actual = str_replace("/", "", $_SERVER["REQUEST_URI"]);?>
+                        <?php if( $actual != get_post_field( 'post_name', get_post()) ):?>
+                        <li class="menu-item">
+                            <a href="<?php the_permalink(); ?>" rel="bookmark">
+                                <?php the_post_thumbnail(); ?>
+                                <span><?php the_title(); ?></span>
+                            </a>
+                        </li><!-- #post -->
+                    <?php endif;?>
+                    <?php endwhile; ?>
+                    </ul>
+                </div><!-- #tertiary -->
           <?php endif; ?>
         </aside> 
 	</div><!-- #primary -->
